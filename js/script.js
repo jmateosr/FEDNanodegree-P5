@@ -28,7 +28,13 @@ function loadData() {
 	var nyTimesURL = "http://api.nytimes.com/svc/search/v2/articlesearch.json?fq=" + cityInput + "&glocations=" + cityInput + "&api-key=" + nyTimesAPI ;
 
 	$.getJSON( nyTimesURL , function (data) {
-		console.log(data);
+		$nytHeaderElem.text("New York Times articles about " + cityInput);
+		articles = data.response.docs;
+
+		for (var i=0; i < articles.length; i++) {
+			var article = articles[i];
+			$nytElem.append('<li class="article">' + '<a href="' + article.web_url + '">' + article.headline.main + '</a>' + '<p>' + article.snippet + '</p>' + '</li>');
+		};
 	});
 	
 	return false;
